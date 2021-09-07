@@ -99,6 +99,18 @@ router.get('/balance', (req,res) => {
     )
 })
 
+router.post('/timeout_url', (req, res) => {
+    console.log('...........Balance Timeout Response............')
+    console.log(req.body)
+}) 
+
+router.post('/result_url', (req,res) => {
+    console.log('...........Balance Response............')
+    console.log(req.body.Result.ResultParameters)
+})
+
+
+
 
 
 function access(req, res, next) {
@@ -126,51 +138,51 @@ function access(req, res, next) {
     }
     )
 }
-// router.get('stk', access, (req, res) => {
-//     let endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
-//     let auth = 'Bearer ' + req.access_token
-//     let passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-//     let BusinessShortCode = 74379
-//     let datenow = new Date()
-//     const timestamp = datenow.getFullYear() + "" + "" + datenow.getMonth() + "" + "" + datenow.getDate() + "" + "" + datenow.getHours() + "" + "" + datenow.getMinutes() + "" + "" + datenow.getSeconds()
-//     const password = new Buffer.from(BusinessShortCode + passkey + timestamp).toString('base64')
+router.get('/stk', access, (req, res) => {
+    let endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
+    let auth = 'Bearer ' + req.access_token
+    let passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+    let BusinessShortCode = 174379
+    let datenow = new Date()
+    const timestamp = datenow.getFullYear() + "" + "" + datenow.getMonth() + "" + "" + datenow.getDate() + "" + "" + datenow.getHours() + "" + "" + datenow.getMinutes() + "" + "" + datenow.getSeconds()
+    const password = new Buffer.from(BusinessShortCode + passkey + timestamp).toString('base64')
 
-//     request(
-//         {
-//             url: endpoint,
-//             method: "POST",
-//             headers: {
-//                 "Authorization": auth
+    request(
+        {
+            url: endpoint,
+            method: "POST",
+            headers: {
+                "Authorization": auth
 
-//         },
-//         json: {
-//             "BusinessShortCode": "",
-//             "Password": password,
-//             "Timestamp": timestamp,
-//             "TransactionType": "CustomerPayBillOnline",
-//             "Amount": "1",
-//             "PartyA": "254715134415",
-//             "PartyB": BusinessShortCode,
-//             "PhoneNumber": "254715134415",
-//             "CallBackURL": "http://197.248.86.122.801/stk_callback",
-//             "AccountReference": "123TEST",
-//             "TransactionDesc": "Process activation"
-//         }
-//     },
+        },
+        json: {
+            "BusinessShortCode": BusinessShortCode,
+            "Password": password,
+            "Timestamp": timestamp,
+            "TransactionType": "CustomerPayBillOnline",
+            "Amount": "1",
+            "PartyA": "254715134415",
+            "PartyB": BusinessShortCode,
+            "PhoneNumber": "254715134415",
+            "CallBackURL": "http://197.248.86.122.801/stk_callback",
+            "AccountReference": "123TEST",
+            "TransactionDesc": "Process activation"
+        }
+    },
 
-//     (error, response, body) => {
-//         if(error) {
-//             console.log(error)
-//         }
+    (error, response, body) => {
+        if(error) {
+            console.log(error)
+        }
 
-//         res.status(200).json(body)
-//     }
-//     )
-// })
+        res.status(200).json(body)
+    }
+    )
+})
 
-// router.post('stk_callback',(req,res) => {
-//     console.log('-----STK-----')
-//     console.log(req.body)
-// })
+router.post('stk_callback',(req,res) => {
+    console.log('-----STK-----')
+    console.log(req.body)
+})
 
 module.exports = router
