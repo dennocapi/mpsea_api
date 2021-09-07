@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const request = require('request')
+const { access } = require('../middleware/token')
 
 router.get('/access_token', access, (req, res) => {
     console.log('Token')
@@ -109,42 +110,24 @@ router.post('/result_url', (req,res) => {
     console.log(req.body.Result.ResultParameters)
 })
 
-
-
-
-
-function access(req, res, next) {
-    let endpoint = 'https://sandbox.safaricom.co.ke/c2b/v1/generate?grant_type=client_credentials'
-    // let auth = 'Bearer ' + req.access_token
-    let auth = new Buffer.from('bW2z7z6wH4uK1HI5itXCdnr9aSg21Gdt:aCvMHe3rxkIHoeqU').toString('base64')
-
-    request(
-        {
-            url: endpoint,
-            headers: {
-                "Authorization": "Basic " + auth
-
-        }
-    },
-
-    (error, response, body) => {
-        if(error) {
-            console.log(error)
-        }
-
-        // res.status(200).json(body)
-        req.access_token = JSON.parse(body).access_token
-        next()
-    }
-    )
-}
 router.get('/stk', access, (req, res) => {
     let endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
     let auth = 'Bearer ' + req.access_token
-    let passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+    let passkey = process.env.PASSKEY
     let BusinessShortCode = 174379
-    let datenow = new Date()
-    const timestamp = datenow.getFullYear() + "" + "" + datenow.getMonth() + "" + "" + datenow.getDate() + "" + "" + datenow.getHours() + "" + "" + datenow.getMinutes() + "" + "" + datenow.getSeconds()
+    // let date = new Date()
+    // let year = date.getFullYear()
+    // let month = date.getMonth()+1
+    // let day = date.getDate()
+    // let hours = date.getHours()
+    // let minutes = date.getMinutes()
+    // let seconds = date.getSeconds()
+    // const timestamp = year + "" + month + "" + day + "" + hours + "" + minutes + "" + seconds
+
+    let date = new Date()
+    const timestamp = date.getFullYear() + "" + "" + date.getMonth() + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
+
+    console.log(timestamp)
     const password = new Buffer.from(BusinessShortCode + passkey + timestamp).toString('base64')
 
     request(
@@ -161,12 +144,12 @@ router.get('/stk', access, (req, res) => {
             "Timestamp": timestamp,
             "TransactionType": "CustomerPayBillOnline",
             "Amount": "1",
-            "PartyA": "254715134415",
-            "PartyB": BusinessShortCode,
+            "PartyA": "600996",
+            "PartyB": "600000",
             "PhoneNumber": "254715134415",
-            "CallBackURL": "http://197.248.86.122.801/stk_callback",
+            "CallBackURL": "https://mpesanodejs.herokuapp.com/stk_callback",
             "AccountReference": "123TEST",
-            "TransactionDesc": "Process activation"
+            "TransactionDesc": "TestPay"
         }
     },
 

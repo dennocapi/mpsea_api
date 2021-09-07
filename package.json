@@ -4,7 +4,8 @@
   "description": "Mpesa api",
   "main": "token.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "Dennis Mutuma",
   "license": "MIT",
