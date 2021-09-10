@@ -22,8 +22,8 @@ router.get('/register', access,(req, res) => {
             json: {
                 "ShortCode": "600383",
                 "ResponseType": "Complete",
-                "ConfirmationURL": "http://197.248.86.122.801/confirmation",
-                "ValidationURL": "http://197.248.86.122.801/validation_url"
+                "ConfirmationURL": "https://mpesanodejs.herokuapp.com/confirmation",
+                "ValidationURL": "https://mpesanodejs.herokuapp.com/validation_url"
             }
         },
         (error, response,body) => {
@@ -59,18 +59,20 @@ router.get('/simulate', access, (req,body) => {
                 "ShortCode": "600383",
                 "CommandID": "CustomerPayBillOnline",
                 "Amount": "100",
-                "Misdn": "254708374149",
+                "Misdn": "254715134415",
                 "BillRefNumber": "Bloow Test"
             }
         },
-        (error, response,body) => {
+        (error, res,body) => {
             if(error) console.log(error)
             res.status(200).json(body)
         }
     )
 })
 
-router.get('/balance', (req,res) => {
+router.get('/balance',access, (req,res) => {
+
+    console.log('Balance')
     let url = 'https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query'
     let auth = 'Bearer ' + req.access_token
 
@@ -83,13 +85,13 @@ router.get('/balance', (req,res) => {
             },
             json: {
                 "Initiator":"testapi",
-                "SecurityCredential": "O9dkkVNU4qfRW6ZFPf871t4tPr71TAFQyKuxRatgpfNH8djISztL0kK8bjbbiVwS9yZXOaGHyv0YMhvU9Wp2N55tOhhC2IkXYMueaTJ0ZZPRR8Nkx",
+                "SecurityCredential": "k8azPoYhFx3nHPsaErfjiCi/zY98kdgqyeBcPBVmYEWym+MC7e4U1HuL8O6dwfod0hvzCzHsN59rfoOxeREf8MEjhB8zgVU/HRND/Dh2j4JAo1fRnqB3ZbeXxVJVCDJiAifX5ONhllKUxu42WWrQU1wvRCXKq1lGx/GJCV5tbmxgKwI4hII+24F2UZ8PRo4ErnOIXm7UDMMWTHbaC8NKz7iqEJljL2DhxzLSAAH7Lal81MnYp/gk3CJhgGJzHg2s1gs1+sTXViw6n6i41VJUDecDHZI3u/S5J0Urx2RO8Ey3pLGfsnhlSjFTPZKiAA1sfsWmDfOG27ATIXTKIDac+w==",
                 "CommandID": "AccountBalance",
                 "PartyA": "601342",
                 "IdentifierType": "4",
                 "Remarks": "Remarks",
-                "QueueTimeOutURL": "http://197.248.86.122.801/timeout_url",
-                "ResultURL": "http://197.248.86.122.801/result_url"
+                "QueueTimeOutURL": "https://mpesanodejs.herokuapp.com/timeout_url",
+                "ResultURL": "https://mpesanodejs.herokuapp.com/result_url"
 
             }
         },
@@ -115,7 +117,8 @@ router.get('/stk', access, (req, res) => {
     let auth = 'Bearer ' + req.access_token
     let passkey = process.env.PASSKEY
     let BusinessShortCode = 174379
-    // let date = new Date()
+    let date = new Date()
+    console.log(date)
     // let year = date.getFullYear()
     // let month = date.getMonth()+1
     // let day = date.getDate()
@@ -123,11 +126,11 @@ router.get('/stk', access, (req, res) => {
     // let minutes = date.getMinutes()
     // let seconds = date.getSeconds()
     // const timestamp = year + "" + month + "" + day + "" + hours + "" + minutes + "" + seconds
+    // let date = Date.now()
 
-    let date = new Date()
-    const timestamp = date.getFullYear() + "" + "" + date.getMonth() + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
-
+    const timestamp = date.getFullYear() + "" + "" + (date.getMonth()+1) + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
     console.log(timestamp)
+
     const password = new Buffer.from(BusinessShortCode + passkey + timestamp).toString('base64')
 
     request(
