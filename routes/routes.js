@@ -128,7 +128,7 @@ router.get('/stk', access, (req, res) => {
     // const timestamp = year + "" + month + "" + day + "" + hours + "" + minutes + "" + seconds
     // let date = Date.now()
 
-    const timestamp = date.getFullYear() + "" + "" + (date.getMonth()+1) + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
+    const timestamp = date.getFullYear() + "" + "" + date.getMonth() + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
     console.log(timestamp)
 
     const password = new Buffer.from(BusinessShortCode + passkey + timestamp).toString('base64')
