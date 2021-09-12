@@ -117,18 +117,20 @@ router.get('/stk', access, (req, res) => {
     let auth = 'Bearer ' + req.access_token
     let passkey = process.env.PASSKEY
     let BusinessShortCode = 174379
+
     let date = new Date()
-    console.log(date)
     // let year = date.getFullYear()
     // let month = date.getMonth()+1
     // let day = date.getDate()
     // let hours = date.getHours()
     // let minutes = date.getMinutes()
     // let seconds = date.getSeconds()
-    // const timestamp = year + "" + month + "" + day + "" + hours + "" + minutes + "" + seconds
-    // let date = Date.now()
+   
+    // if ()
+   
 
-    const timestamp = date.getFullYear() + "" + "" + date.getMonth() + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
+    const timestamp = date.getFullYear() + "" + "0" + (date.getMonth()+1) + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "0" + date.getMinutes() + "" + "" + date.getSeconds()
+    // const timestamp = year + month + day + hours + minutes + seconds
     console.log(timestamp)
 
     const password = new Buffer.from(BusinessShortCode + passkey + timestamp).toString('base64')
@@ -148,7 +150,7 @@ router.get('/stk', access, (req, res) => {
             "TransactionType": "CustomerPayBillOnline",
             "Amount": "1",
             "PartyA": "600996",
-            "PartyB": "600000",
+            "PartyB": BusinessShortCode,
             "PhoneNumber": "254715134415",
             "CallBackURL": "https://mpesanodejs.herokuapp.com/stk_callback",
             "AccountReference": "123TEST",
