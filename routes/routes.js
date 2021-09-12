@@ -119,19 +119,32 @@ router.get('/stk', access, (req, res) => {
     let BusinessShortCode = 174379
 
     let date = new Date()
-    // let year = date.getFullYear()
-    // let month = date.getMonth()+1
-    // let day = date.getDate()
-    // let hours = date.getHours()
-    // let minutes = date.getMinutes()
-    // let seconds = date.getSeconds()
+    let year = date.getFullYear()
+    let month = date.getMonth()+1
+    let day = date.getDate()
+    let hours = date.getHours()
+    let minutes = date.getMinutes()
+    let seconds = date.getSeconds()
+    console.log(month)
    
-    // if ()
+    if ( month < 10 ) {
+        month = '0' + month   
+    }
+    if ( day < 10 ) {
+        day = '0' + day
+    }
+    if ( hours < 10 ) {
+        hours = '0' + hours
+    }
+    if ( minutes < 10 ) {
+        minutes = '0' + minutes
+    }
+    if ( seconds < 10 ) {
+        seconds = '0' + seconds
+    }
    
 
-    const timestamp = date.getFullYear() + "" + "0" + (date.getMonth()+1) + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "0" + date.getMinutes() + "" + "" + date.getSeconds()
-    // const timestamp = year + month + day + hours + minutes + seconds
-    console.log(timestamp)
+    const timestamp = year+ "" + month + "" + day + "" + hours + "" + minutes + "" + seconds
 
     const password = new Buffer.from(BusinessShortCode + passkey + timestamp).toString('base64')
 
