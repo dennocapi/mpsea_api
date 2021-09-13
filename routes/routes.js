@@ -164,7 +164,7 @@ router.get('/stk', access, (req, res) => {
             "PartyA": "600584",
             "PartyB": BusinessShortCode,
             "PhoneNumber": "254715134415",
-            "CallBackURL": "https://mpesanodejs.herokuapp.com/stk_callback",
+            "CallBackURL": "https://mpesanodejs.herokuapp.com/mpesa/stk_callback",
             "AccountReference": "Bloow",
             "TransactionDesc": "TestPay"
         }
@@ -182,6 +182,7 @@ router.get('/stk', access, (req, res) => {
 
 router.post('/stk_callback',(req,res) => {
     console.log('-----STK-----')
+    res.send(req.body)
     console.log(req.body)
     // console.log(req.body.Body.stkCallback.CallbackMetadata)
 })
