@@ -162,7 +162,7 @@ router.get('/stk', access, (req, res) => {
             "Timestamp": timestamp,
             "TransactionType": "CustomerPayBillOnline",
             "Amount": "1",
-            "PartyA": "600996",
+            "PartyA": "600584",
             "PartyB": BusinessShortCode,
             "PhoneNumber": "254715134415",
             "CallBackURL": "https://mpesanodejs.herokuapp.com/stk_callback",
