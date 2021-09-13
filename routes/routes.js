@@ -125,7 +125,6 @@ router.get('/stk', access, (req, res) => {
     let hours = date.getHours()
     let minutes = date.getMinutes()
     let seconds = date.getSeconds()
-    console.log(month)
    
     if ( month < 10 ) {
         month = '0' + month   
