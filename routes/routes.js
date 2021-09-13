@@ -116,7 +116,7 @@ router.get('/stk', access, (req, res) => {
     let endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
     let auth = 'Bearer ' + req.access_token
     let passkey = process.env.PASSKEY
-    let BusinessShortCode = 174379
+    let BusinessShortCode =174379 
 
     let date = new Date()
     let year = date.getFullYear()
@@ -166,7 +166,7 @@ router.get('/stk', access, (req, res) => {
             "PartyB": BusinessShortCode,
             "PhoneNumber": "254715134415",
             "CallBackURL": "https://mpesanodejs.herokuapp.com/stk_callback",
-            "AccountReference": "123TEST",
+            "AccountReference": "Bloow",
             "TransactionDesc": "TestPay"
         }
     },
@@ -181,9 +181,10 @@ router.get('/stk', access, (req, res) => {
     )
 })
 
-router.post('stk_callback',(req,res) => {
+router.post('/stk_callback',(req,res) => {
     console.log('-----STK-----')
     console.log(req.body)
+    // console.log(req.body.Body.stkCallback.CallbackMetadata)
 })
 
 module.exports = router
